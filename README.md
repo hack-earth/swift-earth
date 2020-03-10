@@ -10,7 +10,9 @@ Given a commit to a public repo on GitHub, we can back out any little piece of t
 
 Given that just-prior state, think like a programmer. Does it compile? If not, what are the error messages? Read the source.
 
-### Use [SourceKitten](https://github.com/jpsim/SourceKitten)
+### [Integrate with the Swift Compiler's Semantic Analysis](https://www.polidea.com/blog/how-to-build-swift-compiler-based-tool-the-step-by-step-guide/)
+
+This seems like the state of the art as of this writing.
 
 ### Use [Swift for Tensorflow](https://www.tensorflow.org/swift) and [swiftai](https://github.com/fastai/swiftai)
 
