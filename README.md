@@ -11,7 +11,10 @@ A Swift programming assistant. Let's keep this to ourselves for a bit while we s
      auto-completing a chunk of code that uses them.
    * Writing a rough semblance of some code, selecting it, and auto-completing it into real code.
    
-2. Code suggestions. Given an existing source file (presumably in an editor), suggest improvements.
+2. Code suggestions: given an existing source file (presumably in an editor), suggest improvements.
+
+3. Relevant documentation: given the current cursor or selection, show documentation of identifiers that would
+   likely be used at that point in the code.
 
 ## General Ideas
 
