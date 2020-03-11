@@ -1,13 +1,13 @@
 # swift-earth
 
-A Swift programming assistant. Let's keep this to ourselves for a bit while we see what becomes of it.
+A Swift programming assistant. Let's keep this to ourselves for a bit while we see what comes of it.
 
 ## Functionality targets
 
-Roughly in order of implementation:
+Let's implement these in order:
 
 1. Auto-completion, in a much broader sense than exists today. "Propose some new code at my cursor position."
-   One good trick should be writing a comment and then auto-completing it into the code. Another should be 
+   One well-supported user trick should be writing a comment and then auto-completing it into the code. Another should be 
    writing a function header, putting the cursor inside the brackets, and asking for a function body. Another
    should be typing the names of one or several variables, selecting those, and asking for code that uses them.
    
