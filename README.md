@@ -7,9 +7,12 @@ A Swift programming assistant. Let's keep this to ourselves for a bit while we s
 Let's implement these in order:
 
 1. Auto-completion, in a much broader sense than exists today. "Propose some new code at my cursor position."
-   One well-supported user trick should be writing a comment and then auto-completing it into the code. Another should be 
-   writing a function header, putting the cursor inside the brackets, and asking for a function body. Another
-   should be typing the names of one or several variables, selecting those, and asking for code that uses them.
+   For example, the following usage idioms should be supported well:
+   * Writing a comment and then auto-completing it into code. 
+   * Writing a function header, putting the cursor inside the brackets, and auto-completing the function body.
+   * Writing the names of one or several variables, simply separated by spaces, selecting those, and 
+     auto-completing a chunk of code that uses them.
+   * Writing a rough semblance of some code, selecting it, and auto-completing it into real code.
    
 2. Code suggestions. Given an existing source file (presumably in an editor), suggest improvements.
 
@@ -95,4 +98,7 @@ Given the framework described above, the problem setup for our auto-completion m
 * Start with a WIP AST representing a recent compiler pass, plus "applied edits" representing 
   the user's editing work since that compilation.
 * Use our "editing model" to generate a post AST for the present moment.
-* Predict the next chunk (for now let's say token) of the "upcoming edits".
+* Predict some upcoming edits. This could be
+  * the next token,
+  * upcoming tokens that resolve all nearby compiler errors,
+  * or a replacement for selected text that resolves all nearby compiler errors.
