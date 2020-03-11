@@ -4,8 +4,6 @@ A Swift programming assistant. Let's keep this to ourselves for a bit while we s
 
 ## Functionality targets
 
-Let's implement these in order:
-
 1. Auto-completion, in a much broader sense than exists today. "Propose some new code at my cursor position."
    For example, the following usage idioms should be supported well:
    * Writing a comment and then auto-completing it into code. 
