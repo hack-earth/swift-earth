@@ -28,9 +28,11 @@ Given that just-prior state, think like a programmer. Does it compile? If not, w
 
 We will need deep, peculiar integration with the Swift AST and code analysis.
 
-### Use [Swift for Tensorflow](https://www.tensorflow.org/swift) and [swiftai](https://github.com/fastai/swiftai)
+### For now, do the deep learning with [Fastai](https://docs.fast.ai/)
 
-Contribute back to those.
+### Eventually, do the deep learning with [Swift for Tensorflow](https://www.tensorflow.org/swift) and [swiftai](https://github.com/fastai/swiftai)
+
+### Deploy our functionalith as an [XCode Extension](https://developer.apple.com/documentation/xcodekit/creating_a_source_editor_extension)
 
 ## Ideas for Learning
 
