@@ -34,8 +34,8 @@ Contribute back to those.
 
 ### Code Context
 
-At any given point in the code, we want a deep context. This should represent the information that a human programmer
-might know or reference when writing the code. For example, our code context should include the following:
+At any given point in the code, we want a deep context. This corresponds closely to information that a human programmer
+might consider important when writing the code. Here are some examples:
 * For each identifier in scope:
   * "Meaning" of the name. (When we say "meaning", imagine an embedding.)
   * Type. (Our information about the type should be roughly the same as our information about any identifier in scope.)
@@ -65,7 +65,7 @@ We need this for at least two reasons:
 * We have essentially the same situation in our end-user application: we can't afford to "recompile" 
   every time our user types a character.
     
-Our overall data-capture process should be roughly as follows:
+Our overall data-capture process is roughly as follows:
 * Choose the "before" state of a commit as our starting point.
 * "Imagine" a series of one-character edits that would have been one way to make that diff.
   (In the long run, we may learn this from watching user edits occur, but for now we make it up.)
