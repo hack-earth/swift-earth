@@ -20,9 +20,9 @@ A Swift programming assistant. Let's keep this to ourselves for a bit while we s
 
 ### Use GitHub diffs as training data
 
-Given a commit to a public repo on GitHub, we can back out any little piece of the commit to see a hypothetical just-prior state where another change (known to us from the commit) was needed.
+Given a commit to a public repo on GitHub, we can back out a portion of a commit to see a hypothetical work-in-progress (WIP) state.
 
-Given that just-prior state, think like a programmer. Does it compile? If not, what are the error messages? Read the source.
+Given that WIP state, think like a programmer. Does it compile? If not, what are the error messages? Read the source.
 
 ### [Integrate with the Swift Compiler's Semantic Analysis](https://www.polidea.com/blog/how-to-build-swift-compiler-based-tool-the-step-by-step-guide/)
 
@@ -32,7 +32,7 @@ We will need deep, peculiar integration with the Swift AST and code analysis.
 
 ### Eventually, do the deep learning with [Swift for Tensorflow](https://www.tensorflow.org/swift) and [swiftai](https://github.com/fastai/swiftai)
 
-### Deploy our functionalith as an [XCode Extension](https://developer.apple.com/documentation/xcodekit/creating_a_source_editor_extension)
+### Deploy our functionality as an [XCode Extension](https://developer.apple.com/documentation/xcodekit/creating_a_source_editor_extension)
 
 ## Ideas for Learning
 
