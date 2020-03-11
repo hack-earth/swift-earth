@@ -33,7 +33,8 @@ Contribute back to those.
 
 ### Code Context
 
-At any given point in the code, we want a deep context. For example, this should include:
+At any given point in the code, we want a deep context. This should represent the information that a human programmer
+might know or reference when writing the code. For example, our code context should include the following:
 * For each identifier in scope:
   * "Meaning" of the name. (When we say "meaning", imagine an embedding.)
   * Type. (Our information about the type should be roughly the same as our information about any identifier in scope.)
@@ -46,3 +47,51 @@ One complication for learning is that we want the context in which the code is b
 context in which it already exists. If we are training from GitHub commits, which usually represent a 
 relatively finished point in authoring code, then for training we have to back out the code being written.
 
+### Flow of Training
+
+#### WIP AST Models and Model Diffs
+
+In C++, working with the compiler's own post-semantic-analysis AST, capture and store Swift-friendly "AST models" tuned for our needs.
+
+Let's call these "WIP AST models", because we need to approximate the situation when our end-user is actively editing.
+Obtain these by replaying an arbitrary portion of a given commit, and then "compiling" the resulting, unfinished code.
+(This isn't a full compile. Rather, it is the compiler's syntactic and semantic analysis, intercepted in memory,
+with no code generation.)
+
+We need to learn a transformation from a WIP AST model to a later one obtained by continued edits to the source code.
+We need this for at least two reasons:
+* For training, we can't afford a "recompile" (even in our partial, intra-compiler way) for every observation we collect.
+* We have essentially the same situation in our end-user application: we can't afford to "recompile" 
+  every time our user types a character.
+    
+Our overall data-capture process should be roughly as follows:
+* Choose the "before" state of a commit as our starting point.
+* "Imagine" a series of one-character edits that would have been one way to make that diff.
+  (In the long run, we may learn this from watching user edits occur, but for now we make it up.)
+* Replay a prefix of those edits.
+* Capture an WIP AST model at this point: the "before model".
+* Replay some more edits. Capture these as the "applied edits".
+* Generate a WIP AST model at this later point: the "after model".
+* Capture a delta from the "before model" to the "after model". This is the "model delta".
+* Also capture the next edits to be applied from the diff. These are the "upcoming edits".
+
+This defines our first learning task, which we will call our "editing model": 
+given a "before model" and "applied edits", generate a "model delta".
+It's an unusual application of deep learning: we are training a model to approximate something we could
+do directly from traditional tools by recompiling. But yeah, for performance both in training and in
+application, we need to do that.
+
+#### Compiler Errors as First-Class AST Citizens
+
+Note that because our WIP AST Models represent work in progress, they commonly include compiler errors.
+This is a feature, not a bug: compiler errors are among our best predictors of upcoming edits. So we model
+them along with the rest of the AST, including predicting which compiler errors go away and which new 
+ones appear in our "after model".
+
+#### Auto-Completion Problem Setup
+
+Given the framework described above, the problem setup for our auto-completion model is straightforward: 
+* Start with a "before model" representing a recent compiler pass, plus "applied edits" representing 
+  the user's editing work since that compilation.
+* Use our "editing model" to generate a WIP AST model for the present moment.
+* Predict the next chunk (for now let's say token) of the "upcoming edits".
