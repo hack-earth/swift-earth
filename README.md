@@ -6,7 +6,6 @@ A Swift programming assistant. Let's keep this to ourselves for a bit while we s
 
 1. Auto-completion, in a much broader sense than exists today. "Propose some new code at my cursor position."
    For example, the following usage idioms should be supported well:
-   * Writing a comment and then auto-completing it into code. 
    * Writing a function header, putting the cursor inside the brackets, and auto-completing the function body.
    * Writing the names of one or several variables, simply separated by spaces, selecting those, and 
      auto-completing a chunk of code that uses them.
@@ -99,4 +98,5 @@ Given the framework described above, the problem setup for our auto-completion m
 * Predict some upcoming edits. This could be
   * the next token,
   * upcoming tokens that resolve all nearby compiler errors,
-  * or a replacement for selected text that resolves all nearby compiler errors.
+  * or a replacement for selected text that retains some of those existing fragments
+    while resolving all nearby compiler errors.
