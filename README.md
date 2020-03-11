@@ -76,7 +76,7 @@ Our overall data-capture process is roughly as follows:
 * Capture a delta from the pre AST to the post AST. This is the "WIP AST delta".
 * Also capture the next edits to be applied from the diff. These are the "upcoming edits".
 
-This defines our first learning task, which we will call our "editing model": given a pre AST and
+This defines our first learning task, which we will call our "AST edit model": given a pre AST and
 applied edits, generate a WIP AST delta. It's an unusual application of deep learning: 
 we are training a model to approximate something we could accomplish directly with traditional tools]
 by recompiling. But yeah, for performance both in training and inapplication, we need to do that.
@@ -95,7 +95,7 @@ ones appear in our post AST.
 Given the framework described above, the problem setup for our auto-completion model is straightforward: 
 * Start with a WIP AST representing a recent compiler pass, plus "applied edits" representing 
   the user's editing work since that compilation.
-* Use our "editing model" to generate a post AST for the present moment.
+* Use our AST edit model to generate a post AST for the present moment.
 * Predict some upcoming edits. This could be
   * the next token,
   * upcoming tokens that resolve all nearby compiler errors,
