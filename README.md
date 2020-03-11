@@ -1,4 +1,6 @@
-# swift-earth (deprecated for now in favor of hack-earth-kotlin)
+# swift-earth
+
+*Deprecated for now in favor of [hack-earth-kotlin](https://github.com/hack-earth/hack-earth-kotlin).*
 
 A Swift programming assistant. Let's keep this to ourselves for a bit while we see what comes of it.
 
