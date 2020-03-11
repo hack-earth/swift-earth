@@ -49,16 +49,16 @@ relatively finished point in authoring code, then for training we have to back o
 
 ### Flow of Training
 
-#### WIP AST Models and Model Diffs
+#### WIP ASTs and AST Diffs
 
-In C++, working with the compiler's own post-semantic-analysis AST, capture and store Swift-friendly "AST models" tuned for our needs.
+In C++, working with the compiler's own post-semantic-analysis AST, capture and store Swift-friendly ASTs tuned for our needs.
 
-Let's call these "WIP AST models", because we need to approximate the situation when our end-user is actively editing.
+Let's call these "WIP ASTs", because we must approximate the situation when our end-user is actively editing.
 Obtain these by replaying an arbitrary portion of a given commit, and then "compiling" the resulting, unfinished code.
 (This isn't a full compile. Rather, it is the compiler's syntactic and semantic analysis, intercepted in memory,
 with no code generation.)
 
-We need to learn a transformation from a WIP AST model to a later one obtained by continued edits to the source code.
+We need to learn a transformation from a WIP AST to a later one obtained by continued edits to the source code.
 We need this for at least two reasons:
 * For training, we can't afford a "recompile" (even in our partial, intra-compiler way) for every observation we collect.
 * We have essentially the same situation in our end-user application: we can't afford to "recompile" 
@@ -69,29 +69,30 @@ Our overall data-capture process should be roughly as follows:
 * "Imagine" a series of one-character edits that would have been one way to make that diff.
   (In the long run, we may learn this from watching user edits occur, but for now we make it up.)
 * Replay a prefix of those edits.
-* Capture an WIP AST model at this point: the "before model".
+* Capture a WIP AST at this point: the "pre AST".
 * Replay some more edits. Capture these as the "applied edits".
-* Generate a WIP AST model at this later point: the "after model".
-* Capture a delta from the "before model" to the "after model". This is the "model delta".
+* Generate a WIP AST at this later point: the "post AST".
+* Capture a delta from the pre AST to the post AST. This is the "WIP AST delta".
 * Also capture the next edits to be applied from the diff. These are the "upcoming edits".
 
-This defines our first learning task, which we will call our "editing model": 
-given a "before model" and "applied edits", generate a "model delta".
-It's an unusual application of deep learning: we are training a model to approximate something we could
-do directly from traditional tools by recompiling. But yeah, for performance both in training and in
-application, we need to do that.
+This defines our first learning task, which we will call our "editing model": given a pre AST and
+applied edits, generate a WIP AST delta. It's an unusual application of deep learning: 
+we are training a model to approximate something we could accomplish directly with traditional tools]
+by recompiling. But yeah, for performance both in training and inapplication, we need to do that.
+It will be a whole lot easier to train a model to do it than to add the compability by hand into
+the Swift compiler.
 
 #### Compiler Errors as First-Class AST Citizens
 
-Note that because our WIP AST Models represent work in progress, they commonly include compiler errors.
-This is a feature, not a bug: compiler errors are among our best predictors of upcoming edits. So we model
-them along with the rest of the AST, including predicting which compiler errors go away and which new 
-ones appear in our "after model".
+Note that because our WIP ASTs represent work in progress, they commonly include compiler errors.
+This is a feature, not a bug: compiler errors are among our best predictors of upcoming edits. So we 
+treat them just like the rest of the AST, including predicting which compiler errors go away and which new 
+ones appear in our post AST.
 
 #### Auto-Completion Problem Setup
 
 Given the framework described above, the problem setup for our auto-completion model is straightforward: 
-* Start with a "before model" representing a recent compiler pass, plus "applied edits" representing 
+* Start with a WIP AST representing a recent compiler pass, plus "applied edits" representing 
   the user's editing work since that compilation.
-* Use our "editing model" to generate a WIP AST model for the present moment.
+* Use our "editing model" to generate a post AST for the present moment.
 * Predict the next chunk (for now let's say token) of the "upcoming edits".
